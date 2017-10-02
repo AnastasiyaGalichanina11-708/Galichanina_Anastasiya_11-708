@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,32 +8,24 @@ using System.Threading.Tasks;
 namespace Cond3
 {
     class Program
-    {   public static int Length(int a, int b)
-        {
-        return  Math.Abs(a - b);
-        }
-        public static double Hypotenuse(int c, int d)
-        {
-            return Math.Sqrt(c * c + d * d);
-                }
+    {
         static void Main(string[] args)
         {
-            int x1 = int.Parse(Console.ReadLine()); // точка  x1, y1 всегда стоит в угле 90  град
-            int y1 = int.Parse(Console.ReadLine());
-            int x2 = int.Parse(Console.ReadLine());
-            int y2 = int.Parse(Console.ReadLine());
-            int x3 = int.Parse(Console.ReadLine());
-            int y3 = int.Parse(Console.ReadLine());
-            if (Length(x1,x2)==Length(y1,y3) && Hypotenuse(Length(x1,x2), Length(y1,y3))==Length(x1,x2)*Math.Sqrt(2))
-            { if (x1 < x2 && y1 < y2)
-                    Console.WriteLine("Четвёртая точка: (" + x1 + Length(x1, x2) + "," + y1 + Length(y1, y3) + ")");
-                else if (x1 > x2 && y1 < y2)
-                    Console.WriteLine("Четвёртая точка: (" + x2 + "," + y1 + Length(y1, y3) + ")");
-                     else if (x1 > x2 && y1 > y2)
-                    Console.WriteLine("Четвёртая точка: (" + x1 + Length(x1, x2) + "," + y1 + Length(y1, y3) + ")")// Программа ещё не закончена
-            else
-
-
+            int x = int.Parse(Console.ReadLine());
+            int a = x / 100000;
+            int b = (x/ 10000)%10;
+            int c = (x / 1000)%10;
+            int d = (x / 100) % 10;
+            int e = (x / 10) % 10;
+            int f = x % 10;
+            if (f == 0 || f == 9) Console.WriteLine("No");
+            else if (a + b + c - 1 == e + d + f) Console.WriteLine("Yes");
+            else if (a + b + c + 1 == e + d + f) Console.WriteLine("Yes");
+            else Console.WriteLine("No");
         }
     }
 }
+
+       
+
+ 
