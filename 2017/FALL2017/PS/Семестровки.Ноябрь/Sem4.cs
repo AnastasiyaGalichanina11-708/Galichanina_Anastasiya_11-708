@@ -32,27 +32,34 @@ namespace ConsoleApp17
         {
             var arrayN = TranslateIntoAnArray(n);
             var arrayK = TranslateIntoAnArray(k);
-             
-            var sum = new int[0];
-            for (int i = arrayN.Length-1; i >= 0; i--)
-            {
-                var intermediateValue = Multiply(GetLastElement(arrayN, k), i);
-                sum = AddUp(sum, intermediateValue);
-            }
+            int[] c = GetLastElement(Subtraction(arrayN), arrayK);   //(n-1)d
+            c[c.Length - 1] += 2;  // 2a+d(n-1)
+            if (c[c.Length - 1] + 2 > 9)
+                c[c.Length - 2] += 1;
+            int[] t=
+
+            
+            //var sum = new int[1];
+            //sum[0] = 0;
+            //for (int i = arrayN.Length; i >= 0; i--)
+            //{
+                var intermediateValue = Multiply(, i);
+            //sum = AddUp(sum, intermediateValue);
+            //}
             Console.WriteLine("КОНЧЕННАЯ Cумма");
             foreach (int e in sum)
                 Console.Write(e);
             
         }
-        public static int[] GetLastElement(int[] n, int[] k)// высчитывает d(n-1)
+        public static int[] MultiplyArrayByArray(int[] n, int[] k)// высчитывает d(n-1) // умножает массив на МАССИВ
         {
-            var difference = new int[0];
+            var difference = new int[1];
+            difference[0] = 0;
             for (int i = k.Length; i > 0; i--)
             {
-                var intermediateValue = Multiply(n, k[i-1]);
+                var intermediateValue = MultiplyArrayByNumber(n, k[i-1]);
                 difference = AddUp(difference, intermediateValue);
             }
-            difference[difference.Length-1] += 2 * 1; // прибавляю 1 так как первый элемент в Данной последовательности всегда 
             Console.WriteLine("разница");
             foreach (int e in difference)
                 Console.Write(e);
@@ -83,59 +90,86 @@ namespace ConsoleApp17
             
         }
 
-        public static int[] Multiply(int[] firstNumber, int k)//Умножает массив на число
+        public static int[] MultiplyArrayByNumber(int[] firstNumber, int k)//Умножает массив на ЧИСЛО
         {
             int q = 0;
             int length = firstNumber.Length;
-            var intermediateValue = new int[length + 1];
+            var intermediateValue = new int[length];// length + 1
             for (int i = length; i > 0; i--)
             {
                 intermediateValue[i] = (firstNumber[i-1] * k + q) % 10;
                 q = (firstNumber[i-1] * k + q) / 10;
             }
-            intermediateValue[0] = q;
-            Console.WriteLine("Умножение");
-            foreach (int e in intermediateValue)
-                Console.Write(e);
-            Console.WriteLine();
-            return intermediateValue;
+            if (q != 0)
+            {
+                var result = new int[intermediateValue.Length + 1];
+                result[0] = q;
+                for (int j = 1; j <= intermediateValue.Length; j++)
+                    result[j] = intermediateValue[j - 1];
+                Console.WriteLine("Умножение");
+                foreach (int e in result)
+                    Console.Write(e);
+                Console.WriteLine();
+                return result;
 
+            }
+            else
+            {
+                Console.WriteLine("Умножение");
+                foreach (int e in intermediateValue)
+                    Console.Write(e);
+                Console.WriteLine();
+                return intermediateValue;
+            }
         }
 
-        public static int[] AddUp(int[] shorter, int[] longer)//Суммирует два числа(массива)
+        public static int[] AddUp(int[] shorter, int[] longer)//Суммирует два числа () при умножении в столбике 
         {
             int q = 0;
-            int shortLeng = shorter.Length;// Да, я знаю, что переменные надо какими-то осмысленными названиями делать,
-            int longLeng = longer.Length;// но ведь когда мы делаем обозначение чисел(слагаемых) в формуле a,b
-            var intermediateValue = new int[shortLeng + 2];
-            var result = new List<int>();
-            intermediateValue[shortLeng + 1] = shorter[shortLeng - 1];
-            for (int i = shortLeng-1; i >= 0; i--)
+            int shortLeng = shorter.Length;
+            int longLeng = longer.Length;
+            var intermediateValue = new int[shortLeng + 1];
+            
+            intermediateValue[shortLeng] = shorter[shortLeng - 1];
+            int i = 0;
+            while (i < shortLeng-1)
             {
-                if (i > shortLeng)
-                {
-                    intermediateValue[i] = (shorter[i - 2] + longer[i - 1] + q) % 10;
-                    q = (shorter[i - 1] + longer[i - 1] + q) / 10;
-                }
-                if (shortLeng > longLeng)
-                    intermediateValue[i] = shorter[i-1];
-                
-                else
-                    intermediateValue[i] = longer[i - 1];
+                int elementsSum = shorter[shortLeng - 2 - i] + longer[longLeng - 1 - i] + q; // считает сумму элементов 
+                intermediateValue[shortLeng- 1 -i] = elementsSum % 10; // то, что запишется в резульат в столбике
+                q = elementsSum/ 10;//так называемое число в уме
+                i += 1;
             }
-            if (shortLeng > longLeng)
-               intermediateValue[longLeng-shortLeng] = q + shorter[longLeng - shortLeng - 1];
-            if (longLeng>shortLeng)
-                intermediateValue[longLeng - shortLeng] = q + longer[longLeng - shortLeng - 1];
-            if (intermediateValue[0] == 0)
-                for (int j = 1; j < intermediateValue.Length; j++) 
-                    result.Add(intermediateValue[j]);
+            if (longLeng - shortLeng == 1)
+            {
+                intermediateValue[0] = q + longer[0] % 10;
+                q = q + longer[0] / 10;
+            }
 
-            Console.WriteLine("Cумма");
-            foreach (int e in result)
-                Console.Write(e);
-            Console.WriteLine();
-            return result.ToArray();
+            //if (longLeng>shortLeng)
+            //    intermediateValue[longLeng - shortLeng] = q + longer[longLeng - shortLeng - 1];
+            if (q != 0)
+            {
+                var result = new int[intermediateValue.Length + 1];
+                result[0] = q;
+                for (int j = 1; j <= intermediateValue.Length; j++)
+                    result[j] = intermediateValue[j - 1];
+                Console.WriteLine("Cумма");
+                foreach (int e in result)
+                    Console.Write(e);
+                Console.WriteLine();
+                return result;
+                
+            }
+            else
+            {
+                Console.WriteLine("Cумма");
+                foreach (int e in intermediateValue)
+                   Console.Write(e);
+                Console.WriteLine();
+                return intermediateValue;
+                
+            }
+            
         }
 
     }
