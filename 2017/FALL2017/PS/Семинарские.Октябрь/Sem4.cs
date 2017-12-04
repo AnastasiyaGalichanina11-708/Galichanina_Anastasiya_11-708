@@ -15,6 +15,7 @@ namespace Сем4
 
         static void Main(string[] args)
         {
+	    // ---check--- Что когда вводить вообще непонятно, вы давайте какие-нибудь сообщения, чтобы было ясно
             int n = int.Parse(Console.ReadLine());
             double centerX = double.Parse(Console.ReadLine());
             double centerY = double.Parse(Console.ReadLine());
@@ -27,6 +28,7 @@ namespace Сем4
                 double x = double.Parse(Console.ReadLine());
                 double y = double.Parse(Console.ReadLine());
                 double distLocal = DistanceFromCenterToPoint(x, y, centerX, centerY);
+		// ---check--- если проверяете это distLocal > radius, то это distLocal != radius проверять уже не нужно 
                 if (distLocal < distance && distLocal > radius && distLocal != radius)
                 {
                     distance = distLocal;

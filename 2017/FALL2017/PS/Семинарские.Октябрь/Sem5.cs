@@ -15,6 +15,7 @@ namespace Сем5
             Console.WriteLine("Введите число m не меньшее 2");
             int m = int.Parse(Console.ReadLine());
             int amount = 0;
+	    // ---check--- почему до 10?
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 10; y++)

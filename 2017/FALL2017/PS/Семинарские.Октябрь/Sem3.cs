@@ -14,6 +14,7 @@ namespace Cем3
             int n = int.Parse(Console.ReadLine());
             Console.WriteLine("Введите систему счисления k");
             int k = int.Parse(Console.ReadLine());
+	    // ---check--- зачем два раза вводить?
             Console.WriteLine("Введите систему счисления k");
             int remainder2 = 0;// следующая цифра
             int remainder1 = 0;// предыдущая цифра
@@ -27,8 +28,10 @@ namespace Cем3
                 {
                     remainder1 = remainder2;
                     remainder2 = n % k;
+		    // ---check--- само представление не надо было выводить
                     Console.WriteLine(remainder2);
                     n = n / k;
+		    // ---check--- почему так, а не remainder1 <= remainder2?
                     if (remainder1 == remainder2 || 1 - remainder1 == remainder2)
                         amount++;
                     else amount = 1;

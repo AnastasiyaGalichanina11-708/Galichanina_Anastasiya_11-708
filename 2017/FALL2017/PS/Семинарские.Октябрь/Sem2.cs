@@ -14,6 +14,7 @@ namespace Сем2
             int a2 = Convert.ToInt32(Console.ReadLine());
             int k = Convert.ToInt32(Console.ReadLine());
             int result = a2;
+	    // ---check--- почему формулой не воспользововались?
             for (int i = 3; i <= k; i++)
             {
                 result += a2 - a1;

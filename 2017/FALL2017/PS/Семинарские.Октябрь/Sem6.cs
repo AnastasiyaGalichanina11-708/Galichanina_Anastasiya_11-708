@@ -8,6 +8,7 @@ namespace сем6
 {
     class Program
     {
+	// ---check--- надо было догадаться, что это сумма арифметической прогрессии, и считать сумму по формуле
         static void Main(string[] args)
         {
             int n = int.Parse(Console.ReadLine());
