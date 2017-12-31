@@ -24,6 +24,7 @@ namespace Фактор_иалы
                 temp = sum;
                 sum +=((double)pow/ C(2 * k, k));
                 k++;
+				// ---check--- вот здесь вы уже правильно подсчитываете - домножаете на 2
                 pow *= 2;
             }
             while (Math.Abs(temp - sum) > eps);

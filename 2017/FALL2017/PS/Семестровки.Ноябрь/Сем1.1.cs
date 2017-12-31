@@ -34,6 +34,7 @@ namespace ConsoleApp16
         }
         public static double SumElementK(double x, int k)//формула данная в задаче
         {
+			// ---check--- неоптимально это каждый раз Math.Pow(x, 2 * k + 1) - считать
             return (Math.Pow(-1, k) / (Math.Pow(x, 2 * k + 1) * (2 * k + 1)));
         }
 

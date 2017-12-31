@@ -52,6 +52,7 @@ namespace Сем_1._2
         
         public static double ElementK(double x, int k) //Вычисляет формулу при k
         {
+			// ---check--- опять же оптимальнее домножать предыдущий резальтат вычислений на (-1)*x*(1+k)/k
             return Math.Pow(-1, k) * Math.Pow(x, k) * (1 + k); 
         }
         

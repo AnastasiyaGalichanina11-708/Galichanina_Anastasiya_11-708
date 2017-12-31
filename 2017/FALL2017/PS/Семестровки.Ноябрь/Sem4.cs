@@ -18,8 +18,10 @@ namespace ConsoleApp17
             SumOfProgression(n, k);///////////////ИЗМЕНИТЬ DOUDLE НА INT
 
         }
+		// ---check--- комментарий надо писать до наименования метода. что значит высчитывает (n-1)?
         public static int[] Subtraction(int[] arrayN)// высчитывает(n-1)
         {
+			// ---check--- здесь вылет за границы массива происходит
             if (arrayN[arrayN.Length - 1] == 0)
             {
                 arrayN[arrayN.Length - 2] -= 1;
@@ -39,6 +41,7 @@ namespace ConsoleApp17
                 c[c.Length - 2] += 1;
             int[] t = MultiplyArrayByArray(c, arrayN); //(2a+d(n-1))n
             string sum = DivideArrayBy2(t); // (2a+d(n-1))n/2
+			// ---check--- точно КОНЧЕННАЯ сумма)
             Console.WriteLine("КОНЧЕННАЯ Cумма");
             Console.WriteLine(sum);
         }

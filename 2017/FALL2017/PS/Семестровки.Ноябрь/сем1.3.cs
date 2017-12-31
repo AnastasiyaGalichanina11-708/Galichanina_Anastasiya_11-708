@@ -37,6 +37,7 @@ namespace Cем_1._3
 
             public static double SumElementK(double x, int k)
             {
+				// ---check--- здесь то же самое
                 return (Math.Pow(-1, k + 1) * Math.Pow(x, k)) / k) ;
             }
             static void Main(string[] args)
