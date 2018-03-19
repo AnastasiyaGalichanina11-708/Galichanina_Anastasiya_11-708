@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Learn
+{
+    class MyGragh
+    {
+        public class Graph
+        {
+            int V;
+            public int[,] adjMatrix;
+
+            public Graph(int V)
+            {
+                this.V = V;
+                adjMatrix = new int[V, V];
+            }
+            public void AddEdge(int src, int dest)
+            {
+                adjMatrix[src - 1, dest - 1] = 1;
+            }
+            public void RemoveEdge(int src, int dest)
+            {
+                adjMatrix[src - 1, dest - 1] = 0;
+            }
+            public void Print()
+            {
+                for (int j = 0; j < V; j++)
+                {
+                    for (int k = 0; k < V; k++)
+                        Console.Write(adjMatrix[j, k] + " ");
+                    Console.WriteLine();
+                }
+            }
+            public int[] Decode()
+            {
+                var arr = new int[V * V];
+                int h = 0;
+                for (int j = 0; j < V; j++)
+                {
+                    for (int k = 0; k < V; k++)
+                        if (adjMatrix[j, k] == 1)
+                        {
+                            arr[h] = j + 1;
+                            arr[h + 1] = k + 1;
+                            h += 2;
+                        }
+                }
+                return arr;
+            }
+            public void Plus(Graph other, int i, int j)// где i и j вершины заменяемого ребра
+            {
+                var n = new Graph(this.V + other.V);
+                var b=this.Decode();
+
+                
+            }
+
+        }
+        class LinkedList
+        {
+
+            class Element
+            {
+                public int value;
+                public Element next;
+                public Element(int value)
+                {
+                    this.value = value;
+                }
+            }
+
+            private Element first = null;
+            private Element last = null;
+
+            void AddAtFront(Element node)
+            {
+                node.next = first;
+                first = node;
+            }
+
+            void AddAtEnd(Element node)
+            {
+                if (first == last)
+                    first = node;
+                else
+                {
+                    last.next = node;
+                    last = node;
+                }
+            }
+            void AddList(LinkedList second)
+            {
+                this.last.next = second.first;
+            }
+
+            void RemoveFront()
+            {
+                first = first.next;
+            }
+
+            void Print()
+            {
+                Element ptr = first;
+                while (ptr != null)
+                {
+                    Console.Write(ptr.value + " -> ");
+                    ptr = ptr.next;
+                }
+            }
+
+                static void Main(string[] args)
+                {
+                    Graph G = new Graph(5);
+
+                    G.AddEdge(1, 2);
+                    G.AddEdge(1, 5);
+                    G.AddEdge(2, 3);
+                    G.AddEdge(2, 4);
+                    G.AddEdge(2, 5);
+                    G.AddEdge(3, 4);
+                    G.AddEdge(4, 5);
+
+                    G.Print();
+                    var r = G.Decode();
+                    foreach (var e in r)
+                        Console.WriteLine(e);
+
+                }
+            }
+        }
+}
