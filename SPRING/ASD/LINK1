@@ -13,7 +13,7 @@ namespace Link_1._1
             return words
                 .Where(w => w != "")
                 .Select(w => w.ToLower())         
-                .Where(w => w.Length < L)       //меньше длины L// можно использовать skip
+                .TakeWhile(w => w.Length < L)       //меньше длины L
                 .Where(name => !char.IsDigit(name[name.Length - 1])) // последний символ не цифра
                 .OrderBy(n => n) // в порядке возрастанния
                 .Distinct()
