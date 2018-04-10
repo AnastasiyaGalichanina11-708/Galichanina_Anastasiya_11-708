@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,37 +14,57 @@ namespace ConsoleApp1
         public T Value { get; set; }
         public Item<T> Next { get; set; }
         public Item<T> Previous { get; set; }
+        public Item(T value, Item<T> next, Item<T> prev)
+        {
+            Value = value;
+            Next = next;
+            Previous = prev;
+        }
     }
     class MyLinkedList<T> : IEnumerable<T>
     {
         public Item<T> Head { get; set; }
-        Item<T> Tail { get; set; }
+        public Item<T> Tail { get; set; }
+
         public void AddLast(T value)//  добавить в конец
         {
             if (Head == null)
-                Tail = Head = new Item<T> { Value = value, Next = null, Previous = null };
+                Tail = Head = new Item<T>(value, null, null); 
             else
             {
-                var item = new Item<T> { Value = value, Next = null };
+                var item = new Item<T>(value, null, null); 
                 var c = Tail;
                 c.Next = item;
                 item.Previous = c;
                 Tail = item;
-
-                // добавить previous
             }
         }
 
-        public void AddBetween(Item<T> prev, Item<T> next, Item<T> yourElement)// вставка между двумя
+        public void AddBetween(Item<T> prev, Item<T> next, Item<T> yourElement)// вставка между двумя элементами
         {
-            var c = yourElement.Previous;                                               // заменить названия с и d !!!!!
-            var d = yourElement.Next;
-            c.Next = d;
-            d.Previous = c;   // открепилась ссылка указывающая На наш элемент 
-            yourElement.Next = next;
-            yourElement.Previous = prev;
-            prev.Next = yourElement;
-            next.Previous = yourElement; // закрепили элемент на новое место
+            if (yourElement == Tail) Проверка на то, что мы дошли до конца листа, проблема в том, что мы доходим до ссылки с null 
+            {
+                yourElement.Previous.Next=null;               
+            }
+            else
+            {
+                yourElement.Previous.Next = yourElement.Next;    //открепилась ссылка указывающая На наш элемент
+                yourElement.Next.Previous = yourElement.Previous;
+            }
+            if (prev == null)  //Проверка на то, что мы дошли до начала листа, проблема в том, что мы доходим до ссылки с null
+            {                  //отсутствует присваивание нулу какой-то ссылки на следующий элемент 
+                Head = yourElement;
+                yourElement.Next = next;
+                yourElement.Previous = prev;
+                next.Previous = yourElement;
+            }
+            else
+            {                                               
+                yourElement.Next = next;  // закрепили элемент на новое место
+                yourElement.Previous = prev;
+                prev.Next = yourElement;
+                next.Previous = yourElement; 
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -57,56 +78,92 @@ namespace ConsoleApp1
         }
     }
 
-
-
     class Program
     {
-       
-        static void Main(string[] args)
-       {
-
-            var j = new int[] { 345, 546, 1, 3, 5, 7, 2 }; //, 8, 9, 3, 7, 9, 45, 9, 5, 7, 97, 6, 56, 345, 2, 7, 3, 7, 8, 3, 8, 99, 45, 57, 8, 46, 57, 80, 7 };
-            var jsf = new MyLinkedList<int>();
-
-            foreach (var e in j)
+       static void ShellSortArray(int[] arr, int d) // d- это шаг, на который сдвигается элемент // d- уже заведомо половина
+        {                                           // Сначала делала на массивах, сортировка на списках ниже 
+            
+            for (int i = d; i < arr.Length; i++)
             {
-                jsf.AddLast(e);
+                int j = i - d;
+                while (j >= 0 && arr[j] > arr[i])
+                {
+                    int b = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = b;
+                    j -= d;
+                }
             }
-
-            var watch = new Stopwatch();
-            watch.Start();
-            var i = ShellSortList(jsf);
-            watch.Stop();
-            var h = jsf.Head;
-            Console.WriteLine("Отсортированный массив: ");
-            for (int y = 0; y < 6; y++)
+            if (d / 2 >= 1)
             {
-                Console.Write(h.Value + " ");
-                h = h.Next;
+                if (d % 2 == 0)
+                    ShellSortArray(arr, d / 2);
+                else
+                    ShellSortArray(arr, d / 2 + 1);
             }
-            Console.WriteLine("Length: " + 7 + "   Time: " + watch + "   Iteration: " + i);
-
         }
+        static void Main(string[] args)
+        {
+                StreamReader textToRead = File.OpenText("text.txt");
+                for (int i = 0; i < j.Length; i++)
+                {
+                    j[i] = int.Parse(textToRead.ReadLine());
+                }
+                textToRead.Close();
 
-        static int ShellSortList(MyLinkedList<int> list) // d- это шаг, на который сдвигается элемент 
+                var jsf = new MyLinkedList<int>();
+
+                foreach (var e in j)
+                {
+                    jsf.AddLast(e);
+                }
+
+                var watch = new Stopwatch();
+                watch.Start();
+                var i = InsertionSortList(jsf);
+                watch.Stop();
+                var h = jsf.Head;
+                Console.WriteLine("Отсортированный массив: ");
+                while (h != null)
+                {
+                    Console.Write(h.Value + " ");
+                    h = h.Next;
+                }
+                Console.WriteLine("Length: " + j.Length + "   Time: " + watch.ElapsedMilliseconds + "   Iteration: " + i);
+                // если убрать слэши то, отработает ShellSort для массива 
+                //var jsfh = new int[] {345,546,1,3,5,7,2,8,9,3,7,9,45,9,5,7,97,6,56,345,2,7,3,7,8,3,8,99,45,57,8,46,57,80,7 };
+                //if (jsfh.Length % 2 == 0)
+                //    ShellSortArray(jsfh, jsfh.Length / 2 );
+                //else ShellSortArray(jsfh, jsfh.Length / 2 + 1);
+                //foreach (var y in jsfh)
+                //    Console.Write(y + " "); 
+
+            
+        }    
+
+
+        static int InsertionSortList(MyLinkedList<int> list) 
         {
             int i = 0;
             var c = list.Head.Next;
             while (c != null)
             { 
-                var e = c.Previous;
-                while (e != null && c.Value < e.Value)
-                {
-                    list.AddBetween(e, e.Next, c);
+                var e = c;
+                while (e.Previous != null && c.Value < e.Previous.Value)
+                {     
                     e = e.Previous;
                     i += 1;
                 }
-                
-                c = c.Next;
+                var b = c.Next;
+                if (c.Value < e.Value)
+                    list.AddBetween(e.Previous, e, c);
+                c = b;             
                 i += 1;
+                
             }
             return i;
         }
 
     }
 }          
+                
