@@ -1,0 +1,49 @@
+class QuickSort
+    {
+        
+        // разделение массива по ключу key так, что левая часть - x <=key, правая часть - x > key
+        private int Partition(int[] arr, int start, int end)
+        {
+            int key = arr[end];
+            int i = start - 1;
+            for (int j = start; j < end; j++)
+            {
+                if (arr[j] <= key) Swap(ref arr[++i], ref arr[j]);
+            }
+            Swap(ref arr[++i], ref arr[end]);
+            return i;
+        }
+ 
+        
+        // сортировка
+        public void QuickSorting(int[] arr, int start, int end)
+        {
+            if (start < end)
+            {
+                int key = Partition(arr, start, end);
+                QuickSorting(arr, start, key - 1);
+                QuickSorting(arr, key + 1, end);
+            }
+        }
+          }
+ 
+ 
+        class Test
+    {
+        static void Main(string[] args)
+        {           
+            QuickSort quick = new QuickSort();
+            Random rnd = new Random(DateTime.Now.Millisecond);
+ 
+                int[] array = new int[1000000];
+            
+            for (int i = 0; i < 1000000; i++)
+            {
+                int i_rnd = rnd.Next(1, 1000);
+                array[i] = i_rnd;
+            }
+ 
+            quick.QuickSorting(array, 0, array.Length - 1);
+            
+        }
+    }
