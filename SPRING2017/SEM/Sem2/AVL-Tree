@@ -1,0 +1,218 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Trees
+{
+    class AVLTreeNode<T> : BinaryTreeNode<T>
+        where T : IComparable
+    {
+        public AVLTreeNode(T value)
+            : base(value)
+        {
+        }
+        public new AVLTreeNode<T> LeftChild { get; set; }
+        public new AVLTreeNode<T> RightChild { get; set; }
+        public new AVLTreeNode<T> Parent { get; set; }
+
+    }
+
+ 
+    class AVLTree<T> : BinaryTree<T>
+        where T : IComparable
+    {
+  
+        public new AVLTreeNode<T> Root { get; set; }
+
+        public new AVLTreeNode<T> Find(T value) // Возвращает AVL-узел, соответствующий заданному значению
+        {
+            return (AVLTreeNode<T>)base.Find(value);
+        }
+
+      
+        public override void Add(T value) //Вставьте значение в дерево и, если необходимо, перебалансируйте дерево.
+        {
+            AVLTreeNode<T> node = new AVLTreeNode<T>(value);
+
+            base.Add(node); //добавить нормально
+
+            //Баланс каждого узла вверх, начиная с родительского
+            AVLTreeNode<T> parentNode = node.Parent;
+
+            while (parentNode != null)
+            {
+                int balance = this.GetBalance(parentNode);
+                if (Math.Abs(balance) == 2) //-2 или 2 значит дерево не сдбалансировано
+                {
+                    //Дерево ребалансировки
+                    this.BalanceAt(parentNode, balance);
+                }
+
+                parentNode = parentNode.Parent; //Продолжение проверки вниз(продолжение движения по дереву)
+            }
+        }
+
+        public override bool Remove(T value) //Удаляет заданное значение из дерева и при необходимости ребалансирует дерево.
+        {
+            AVLTreeNode<T> valueNode = this.Find(value);
+            return this.Remove(valueNode);
+        }
+
+        protected new bool Remove(BinaryTreeNode<T> removeNode) //Метод обработки для удаления узла внутри дерева
+        {
+            return this.Remove((AVLTreeNode<T>)removeNode);
+        }
+
+        public bool Remove(AVLTreeNode<T> valueNode) //Удаляет данный узел из дерева и при необходимости ребалансирует дерево.
+        {
+            //Сохранить ссылку на родительский узел, который нужно удалить.
+            AVLTreeNode<T> parentNode = valueNode.Parent;
+
+            //Удалите узел как обычно
+            bool removed = base.Remove(valueNode);
+
+            if (!removed)
+                return false; //удаление не удалось, нет необходимости перебалансировки
+            else
+            {
+                //Balance going up the tree (Баланс поднимает дерево)
+                while (parentNode != null)
+                {
+                    int balance = this.GetBalance(parentNode); // проверяет находится ли вершина в балансе со своим предшественником
+
+                    if (Math.Abs(balance) == 1) //1, -1
+                        break; //высота не изменилась, может остановиться
+                    else if (Math.Abs(balance) == 2) //2, -2
+                    {
+                        //Перебалансировка дерева
+                        this.BalanceAt(parentNode, balance);
+                    }
+
+                    parentNode = parentNode.Parent;
+                }
+
+                return true;
+            }
+        }
+
+
+        protected virtual void BalanceAt(AVLTreeNode<T> node, int balance)// Сбалансирует узел дерева AVL
+        {
+            if (balance == 2) //Перевес
+            {
+                int rightBalance = GetBalance(node.RightChild);
+
+                if (rightBalance == 1 || rightBalance == 0)
+                {
+                    //Левое вращение
+                    RotateLeft(node);
+                }
+                else if (rightBalance == -1)
+                {
+                    // Правое вращение
+                    RotateRight(node.RightChild);
+
+                    // Левое вращение 
+                    RotateLeft(node);
+                }
+            }
+            else if (balance == -2) 
+            {
+                int leftBalance = GetBalance(node.LeftChild);
+                if (leftBalance == 1)
+                {
+                    RotateLeft(node.LeftChild);
+                    RotateRight(node);
+                }
+                else if (leftBalance == -1 || leftBalance == 0)
+                {
+                    RotateRight(node);
+                }
+            }
+        }
+
+        protected virtual int GetBalance(AVLTreeNode<T> root) // Определяет баланс данного узла
+        {
+            //Баланс = высота правого ребенка - высота левого ребенка
+            return this.GetHeight(root.RightChild) - this.GetHeight(root.LeftChild);
+        }
+
+        protected virtual void RotateLeft(AVLTreeNode<T> root)
+        {
+            if (root == null)
+                return;
+
+            AVLTreeNode<T> pivot = root.RightChild;
+
+            if (pivot == null)
+                return;
+            else
+            {
+                AVLTreeNode<T> rootParent = root.Parent; //исходный родитель корневого узла
+                bool isLeftChild = (rootParent != null) && rootParent.LeftChild == root; //был ли корень левым узлом родителя
+                bool makeTreeRoot = root.Tree.Root == root; //был ли корень корнем всего дерева
+
+                //Поворот
+                root.RightChild = pivot.LeftChild;
+                pivot.LeftChild = root;
+
+                //Обновление родителей
+                root.Parent = pivot;
+                pivot.Parent = rootParent;
+
+                if (root.RightChild != null)
+                    root.RightChild.Parent = root;
+
+                //Update the entire tree's Root if necessary
+                if (makeTreeRoot)
+                    pivot.Tree.Root = pivot;
+
+                //Update the original parent's child node
+                if (isLeftChild)
+                    rootParent.LeftChild = pivot;
+                else
+                    if (rootParent != null)
+                        rootParent.RightChild = pivot;
+            }
+        }
+
+        protected virtual void RotateRight(AVLTreeNode<T> root)
+        {
+            if (root == null)
+                return;
+
+            AVLTreeNode<T> pivot = root.LeftChild;
+
+            if (pivot == null)
+                return;
+            else
+            {
+                AVLTreeNode<T> rootParent = root.Parent; 
+                bool isLeftChild = (rootParent != null) && rootParent.LeftChild == root; 
+                bool makeTreeRoot = root.Tree.Root == root; 
+
+                //Поворот
+                root.LeftChild = pivot.RightChild;
+                pivot.RightChild = root;
+
+                //Обновление родителя
+                root.Parent = pivot;
+                pivot.Parent = rootParent;
+
+                if (root.LeftChild != null)
+                    root.LeftChild.Parent = root;
+
+                //Обновите корень всего дерева, если необходимо
+                if (makeTreeRoot)
+                    pivot.Tree.Root = pivot;
+
+                //Обновить дочерний узел исходного родителя
+                if (isLeftChild)
+                    rootParent.LeftChild = pivot;
+                else
+                    if (rootParent != null)
+                        rootParent.RightChild = pivot;
+            }
+        }
+    }
+}
