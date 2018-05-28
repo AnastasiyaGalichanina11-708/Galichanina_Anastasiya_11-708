@@ -1,0 +1,103 @@
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+//Задание 1
+namespace WebClient1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = new WebClient();
+            var url = client.DownloadString("https://jsonplaceholder.typicode.com/photos");
+            
+            var tasks = new List<Task>();// создаём потоки
+            var kart = JsonConvert.DeserializeObject<Pictures[]>(url);
+            foreach (var it in kart)// Само скачивается
+            {
+                WebClient cl = new WebClient();
+                var File = Path.GetFileName(it.ThumrUrl);
+                task.Add(client.DownloadFileTaskAsync(item.ThumdrUrl, $"(fieName).png"));
+            }
+            task.WaitAll(Task.)
+                    
+            }
+            
+    }
+}
+
+
+//Задание 2
+namespace Треды
+{
+    class MyClass
+    {
+        public int Property { get; set; }
+        private bool Field;
+        public int Method(int argument)
+        {
+            return Property + argument;
+        }
+    }
+    class Students
+    {
+        public string Oooh()
+        {
+            return "hi";
+        }
+        public int Asd()
+        {
+            return 8;
+        }
+        public void Metod()
+        {
+            int i = 0;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+
+
+       //Возможная реализация на Json
+        //{
+        //    var type = typeof(MyClass);
+
+        //    ConstructorInfo ctor = type.GetConstructor(new Type[] { });
+        //    var result = ctor.Invoke(new object[] { });
+        //    // делает то же, что 
+        //    // object result = new MyClass();
+
+        //    var propertyInfo = type.GetProperty("Property");
+        //    propertyInfo.SetValue(result, 5);
+        //    var variable1 = (int)type.GetMethod("Method").Invoke(result, new object[] { 3 });
+        //    var str = JsonConvert.SerializeObject(type); 
+        //     Console.WriteLine(str);
+            
+        //}
+        
+
+        public bool Yes(string methodName)//Чётное ли количество согласных
+        {
+            int countLetters = 0;
+            foreach (char i in methodName)
+                if (IsConsonant(i)) countLetters += 1;
+            return (countLetters % 2 == 0);     
+        }
+        public bool IsConsonant(char letter)//Является ли буква согласной
+        {
+            var isConsonant = false;
+            var array = new char[] { 'w', 'r', 't', 'p', 's', 'd', 'f', 'g', 'h', 'k', 'l', 'j', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'W', 'R', 'T', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'q' };
+            foreach (char t in array)
+            if (letter==t) isConsonant = true;
+            return isConsonant;
+        }
+
+    }
+}
