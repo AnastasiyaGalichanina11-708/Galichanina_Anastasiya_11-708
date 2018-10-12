@@ -3,26 +3,27 @@
 CREATE DATABASE Test
 ON
 ----В первичной группе описать 2 файла
-PRIMARY(В первичной группе описать 2 файла
+PRIMARY(
 NAME=Firsthojurnal,
 FILENAME='d:\dbcourse\Firsthojurnal.mdf',
 SIZE = 150 MB,
 MAXSIZE=500 MB,
 FILEGROWTH=100 MB),(
 NAME=Secondjurnal,
-FILENAME='C:\Users\Администратор\Documents\Secondjurnal.mdf'),
+FILENAME='C:\Users\Администратор\Documents\Secondjurnal.mdf')
 ----Файл журнала
+
 LOG ON
 (NAME = TestGroup2_dat,
 FILENAME = 'C:\Users\Администратор\Documents\TestGroup2_dat.ndf',
 SIZE=80 MB,
 MAXSIZE=500 MB,
 FILEGROWTH=10 MB)
+
 LOG ON
-(NAME = TestGroup1_dat,
+( NAME = TestGroup1_dat,
 FILENAME = 'C:\Users\Администратор\Documents\TestGroup1_dat.ndf',
 SIZE=140 MB,
 FILEGROWTH = 10%,
 MAXSIZE=500 MB);
-
 GO
