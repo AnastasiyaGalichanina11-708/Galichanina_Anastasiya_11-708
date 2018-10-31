@@ -1,16 +1,88 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# SQL Server Management Studio Solution File, Format Version 14.00
-VisualStudioVersion = 14.0.23107.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Default|Default = Default|Default
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{16543DC6-8572-4D1C-B126-C1D5F068A941}.Default|Default.ActiveCfg = Default
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+/*CREATE LOGIN new_user
+WITH PASSWORD='password';*/
+
+USE master
+GO
+
+/*CREATE USER new_user FOR LOGIN new_user;
+GO*/
+
+GRANT CREATE DATABASE TO new_user;
+GO
+
+ USE filmography;
+ GO
+
+
+CREATE TABLE movies(
+movie_name nvarchar(30),
+movie_description ntext,
+movie_year date UNIQUE CHECK(movie_year>1990 AND movie_year < YEAR(GETDATE()+10)),
+genres nchar(20),
+country nvarchar,
+budget money CHECK(budget>10000)
+PRIMARY KEY(movie_name, movie_year)
+);
+GO
+
+CREATE TABLE actors(
+surname nvarchar UNIQUE,
+actor_name nvarchar UNIQUE,
+birthday date UNIQUE,
+motherland nvarchar,
+number_of_movies int CHECK(number_of_movies>5)
+CONSTRAINT Const_surname UNIQUE(surname, actor_name, birthday)
+ );
+ GO
+
+ALTER TABLE actors ADD column_Seq1 VARCHAR NULL; 
+CREATE SEQUENCE actors.Seq1 AS INT START WITH 1 INCREMENT BY 1;
+GO
+
+ CREATE TABLE producer(
+ surname nvarchar,
+ producer_name nvarchar,
+ birthday date,
+ motherland nvarchar
+ );
+ GO
+
+ INSERT INTO producer (motherland)VALUES (.USA) ;  
+ GO
+
+ ALTER TABLE producer ADD column_Seq2 VARCHAR NULL; 
+ GO
+
+ CREATE SEQUENCE producer.Seq2 AS INT START WITH 1 INCREMENT BY 1;
+ GO
+
+ /*Òåñòîâûå çíà÷åíèÿ*/
+  INSERT [movies](movie_name, movie_description, movie_year, genres, country, budget)
+  VALUES
+  ('The Imitation Game', 'Enigma',2014, 'historical drama',.USA,14000000),
+  ('The Shawshank Redemption', '....', 1994, 'äðàìà',.USA,25000000),
+  ('Maleficenta', '....', 2014, 'fantacy',.USA,180000000),
+  ('The Shawshank Redemption', '....', 1994, 'äðàìà',.USA,25000000),
+  ('Forrest Gump', '....', 1994, 'äðàìà',.USA,55000000),
+  ('Leon', '....', 1994, 'äðàìà',.FRANCE,115000000);
+  GO
+
+  INSERT [actors](actor_name, surname, birthday, motherland, number_of_movies)
+  VALUES
+  ('Benedict', 'Cumberbatch',19-07-1976,.UK, 30),
+  ('Natalie', 'Portman', 09-06-1981,.IZRAIL, 40),
+  ('Angelina', 'Jolie Pitt',11-11-1974,.UK,50),
+  ('Tom', 'Hanks', 09-07-1956,.UK, 42),
+  ('Ellen', 'Page', 21-02-1987,.CANADA, 15),
+  ('Scarlett', 'Johansson', 22-11-1984, .UK, 35);   
+  GO
+
+  INSERT [producer](producer_name, surname, birthday, motherland)
+  VALUES
+  ('Guy', 'Richie', 10-09-1968, .UK),
+  ('Quentin', 'Tarantino', 27-03-1963, .USA),
+  ('Steven', 'Spielberg', 18-12-1946, .USA),
+  ('Christopher', 'Nolan', 30-07-1970, .UK),
+  ('Wes', 'Anderson', 01-05-1969, .USA),
+  ('Frank', 'Darabont', 28-01-1959, .FRANCE);
+  GO
