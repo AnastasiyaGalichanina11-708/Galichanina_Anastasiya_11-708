@@ -1,0 +1,55 @@
+C:\4238\debut2\debut2\bin\Debug\debut2.exe.config
+C:\4238\debut2\debut2\bin\Debug\debut2.exe
+C:\4238\debut2\debut2\bin\Debug\debut2.pdb
+C:\4238\debut2\debut2\obj\Debug\debut2.csprojResolveAssemblyReference.cache
+C:\4238\debut2\debut2\obj\Debug\debut2.Form1.resources
+C:\4238\debut2\debut2\obj\Debug\debut2.Properties.Resources.resources
+C:\4238\debut2\debut2\obj\Debug\debut2.csproj.GenerateResource.Cache
+C:\4238\debut2\debut2\obj\Debug\debut2.exe
+C:\4238\debut2\debut2\obj\Debug\debut2.pdb
+C:\4238\debut2\debut2\obj\Debug\NTO2.Form1.resources
+C:\4238\debut2\debut2\obj\Debug\Test.Form1.resources
+G:\НТО\debut2\debut2\obj\Debug\debut2.csprojResolveAssemblyReference.cache
+G:\НТО\debut2\debut2\obj\Debug\debut2.Form1.resources
+G:\НТО\debut2\debut2\obj\Debug\debut2.Properties.Resources.resources
+G:\НТО\debut2\debut2\obj\Debug\debut2.csproj.GenerateResource.cache
+G:\НТО\debut2\debut2\obj\Debug\debut2.csproj.CoreCompileInputs.cache
+G:\НТО\debut2\debut2\obj\Debug\debut2.exe
+G:\НТО\debut2\debut2\bin\Debug\debut2.exe.config
+G:\НТО\debut2\debut2\bin\Debug\debut2.exe
+G:\НТО\debut2\debut2\bin\Debug\debut2.pdb
+G:\НТО\debut2\debut2\obj\Debug\debut2.pdb
+E:\НТО\debut2\debut2\bin\Debug\debut2.exe.config
+E:\НТО\debut2\debut2\bin\Debug\debut2.exe
+E:\НТО\debut2\debut2\bin\Debug\debut2.pdb
+E:\НТО\debut2\debut2\obj\Debug\debut2.csprojResolveAssemblyReference.cache
+E:\НТО\debut2\debut2\obj\Debug\debut2.Form1.resources
+E:\НТО\debut2\debut2\obj\Debug\debut2.Properties.Resources.resources
+E:\НТО\debut2\debut2\obj\Debug\debut2.csproj.GenerateResource.cache
+E:\НТО\debut2\debut2\obj\Debug\debut2.csproj.CoreCompileInputs.cache
+E:\НТО\debut2\debut2\obj\Debug\debut2.exe
+E:\НТО\debut2\debut2\obj\Debug\debut2.pdb
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.csprojResolveAssemblyReference.cache
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.Form1.resources
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.Properties.Resources.resources
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.csproj.GenerateResource.cache
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.csproj.CoreCompileInputs.cache
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.exe
+F:\НТО\debut2 — копия\debut2\obj\Debug\debut2.pdb
+F:\НТО\debut2 — копия\debut2\bin\Debug\App_Data\Database1.mdf
+F:\НТО\debut2 — копия\debut2\bin\Debug\App_Data\Database1_log.ldf
+F:\НТО\debut2 — копия\debut2\bin\Debug\debut2.exe.config
+F:\НТО\debut2 — копия\debut2\bin\Debug\debut2.exe
+F:\НТО\debut2 — копия\debut2\bin\Debug\debut2.pdb
+C:\Users\User\Downloads\debut2_-_2_2\debut2\bin\Debug\App_Data\Database1.mdf
+C:\Users\User\Downloads\debut2_-_2_2\debut2\bin\Debug\App_Data\Database1_log.ldf
+C:\Users\User\Downloads\debut2_-_2_2\debut2\bin\Debug\debut2.exe.config
+C:\Users\User\Downloads\debut2_-_2_2\debut2\bin\Debug\debut2.exe
+C:\Users\User\Downloads\debut2_-_2_2\debut2\bin\Debug\debut2.pdb
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.csprojAssemblyReference.cache
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.Form1.resources
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.Properties.Resources.resources
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.csproj.GenerateResource.cache
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.csproj.CoreCompileInputs.cache
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.exe
+C:\Users\User\Downloads\debut2_-_2_2\debut2\obj\Debug\debut2.pdb
