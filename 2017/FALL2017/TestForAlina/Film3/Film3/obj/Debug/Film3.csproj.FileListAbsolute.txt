@@ -1,0 +1,2 @@
+C:\Users\User\Desktop\проект\Film3\Film3\obj\Debug\Film3.csprojAssemblyReference.cache
+C:\Users\User\Desktop\проект\Film3\Film3\obj\Debug\Film3.csproj.CoreCompileInputs.cache
