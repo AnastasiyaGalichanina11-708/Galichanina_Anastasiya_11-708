@@ -1,0 +1,19 @@
+@model CookingApp.Models.ApplicationUser
+
+<html>
+<body>
+    <div class="post-container">
+        <img src="@Url.Content(Model.ImagePath)" class="card-img-top">
+        @Html.LabelFor(m => m.UserName, "Имя")
+        <div class="post-content">@Model.UserName</div>  
+        @Html.LabelFor(m => m.Email, "Email")
+        <div class="post-content">@Model.Email</div> 
+        @Html.LabelFor(m => m.EmailConfirmed, "Подтверждение email")
+        <div class="post-content">@Model.EmailConfirmed</div> 
+        @Html.LabelFor(m => m.PhoneNumber, "Телефон")
+        <div class="post-content">@Model.PhoneNumber</div>
+        @Html.LabelFor(m => m.Balance)
+        <div class="post-content">@Model.Balance</div>
+    </div>
+</body>
+</html>

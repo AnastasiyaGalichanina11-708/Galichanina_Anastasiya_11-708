@@ -1,0 +1,94 @@
+@using CookingApp.Models
+@model CookingApp.Models.Dish
+@{
+    ViewData["Title"] = "Статья";
+}
+
+<html>
+<head>
+    <title>Статья</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#likeButton').click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "/Main/Like/" + @Model.Id,
+                    success: function(result) {
+                        $('#likesCount').html(result);
+                    }
+                });
+            });
+        })
+    </script>
+    <script>
+            $(document).ready(function() {
+                $('#commentButton').click(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/Main/Comment",
+                        data: { content : $('#comments-content').val(), articleId : @Model.Id }, 
+                        success: function(result) {
+                            var resultString = '';
+                            for (var i in result) {
+                                resultString +=
+                                    '<div class="card-body"><h6 class="post-meta-info-container post-subtitle">' +
+                                    result[i]["userId"] +
+                                    '</h6><div class="post-content">' +
+                                    result[i]["content"] +
+                                    '</div></div>';
+                            }
+                            $('#comments').html(resultString);
+                            $('#comments-content').val('');
+                        }
+                    });
+                });
+            })
+        </script>
+</head>
+<body>
+<div class="body-content">
+    
+    <div class="posts-container">
+        <h2 class="post-header">@Model.Title</h2>
+        <h5 class="category-header">@DateTime.FromBinary(Model.CreationDate) @Model.Username</h5>
+        <h5 class="category-header">@Model.Category</h5>
+    
+        <img src="@Url.Content(Model.ImagePath)" class="card-img-top">
+    
+        <div id="postdiv-@Model.Id" style="display: none">
+            @using (Html.BeginForm("Comment", "Main", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                <textarea id="posttext-@Model.Id" name="content"></textarea>
+                <input type="hidden" name="articleId" value="@Model.Id"/>
+                <input type="submit" value="Отправить"/>
+            }
+        </div>
+    
+        <div class="buttons-block">
+            <a href="~/Main/Home" class="btn btn-secondary">На главную</a>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a href="~/Account/Profile" class="btn btn-info">На свою страницу</a>
+            }
+            
+        </div>
+        
+        <div class="buttons-block">
+            <div class="post-content">
+                @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin") && User.Identity.Name != Model.Username)
+                {
+   
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Comment text..." id="comments-content">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="commentButton">Send</button>
+                        </div>
+                    </div>
+                }
+            </div>
+         </div>
+    </div>
+</div>
+</body>
+</html>

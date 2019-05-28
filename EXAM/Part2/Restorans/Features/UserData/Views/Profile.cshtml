@@ -1,0 +1,73 @@
+@using CookingApp.Utils
+@model IEnumerable<CookingApp.Models.Recipe>
+@{
+    ViewData["Title"] = "Профиль";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Профиль</title>
+</head>
+<body>
+    <div class="container profile-page">
+        <div class="row">
+            <div class="col-4">
+                
+                <h3 class="header-block">Profile</h3>
+                
+                @Html.Partial("~/Features/UserData/Views/UserView.cshtml", ViewData["User"] as CookingApp.Models.ApplicationUser)
+                
+                <div class="form-group profile-buttons-block">
+                    <div class="button-row">
+                        <a class="btn btn-primary" href="~/Account/CreateRecipe">Add recipe</a>
+                    </div>
+                    <div class="button-row">
+                        <a class="btn btn-info" href="~/Account/EditUser">Profile settings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <h3 class="header-block">Posts</h3>
+                <table>
+                    @foreach (var recipe in Model)
+                    {
+                        <tr>
+                            <div class="card bg-light mb-3">
+                                
+                                <img src="@Url.Content(recipe.ImagePath)" class="card-img-top">
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">@recipe.Title</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">@DateTime.FromBinary(recipe.CreationDate)</h6>
+                                    @switch (recipe.Status)
+                                    {
+                                        case (int) RecipeStatus.Approved:
+                                            <h6 class="card-subtitle mb-2 approved">Approved</h6>
+                                            break;
+                                        case (int) RecipeStatus.Declined:
+                                            <h6 class="card-subtitle mb-2 declined">
+                                                Declined: @recipe.DeclineComment
+                                            </h6>
+                                            break;
+                                        case (int) RecipeStatus.Created:
+                                            <h6 class="card-subtitle mb-2 created">Created</h6>
+                                            break;     
+                                    }
+                                    <a class="btn btn-primary" href="~/Main/Show/@recipe.Id">Show</a>                                  
+                                    <a class="btn btn-success" href="~/Account/EditRecipe/@recipe.Id">Edit</a>
+                                    <a class="btn btn-danger" href="~/Account/Delete/@recipe.Id">Delete</a>
+                                    @if(recipe.Status == (int) RecipeStatus.Declined)
+                                    {
+                                        <a class="btn btn-secondary" href="~/Account/OnReview/@recipe.Id">Send on review</a>
+                                    }
+                                </div>
+                             </div>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

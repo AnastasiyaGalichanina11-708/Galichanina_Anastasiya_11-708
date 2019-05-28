@@ -1,0 +1,86 @@
+﻿@using CookingApp.Models
+@model CookingApp.Features.MainPage.Models.MainViewModel
+@functions
+{
+    private static string GetSubstring(string n)
+    {
+        if (n == null || n.Length < 30)
+            return n;
+        return n.Substring(0, n.Length > 120 ? 120 : n.Length) + " ...";
+    }
+}
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Лента</title>
+</head>
+<body>
+<div class="body-content">
+    <h3 class="header-block">Feed</h3>
+    <form class="form-inline" asp-action="Home">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Category</span>
+        </div>
+        <select name="categoryId" class="form-control">
+            <option >All</option>
+            @foreach (var category in Html.GetEnumSelectList(typeof(Category)).Select(c => c.Text))
+            {
+                <option value="@category">@category</option>
+            }
+            
+        </select>
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Cuisine</span>
+            </div>
+            @Html.DropDownList("cuisineId",new SelectList(Model.UserCuisines,"Value","Text"))
+        <input type="submit" class="btn btn-light"/>
+    </form>
+    
+    <div class="posts-container">
+        @foreach (var recipe in Model.Recipes)
+        {
+            <tr>
+                <div class="card bg-light mb-3">
+                    <img src="@Url.Content(recipe.ImagePath)" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@DateTime.FromBinary(recipe.CreationDate) @recipe.Username</h6>
+                        <p class="card-text">@GetSubstring(recipe.Content)</p>
+                        <a class="btn btn-primary" href="~/Main/Show/@recipe.Id">Show</a>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger" href="~/Account/Delete/@recipe.Id">Delete</a>
+                        }
+                    </div>
+                </div>
+            </tr>
+        }
+    </div>
+    <div class="buttons-block">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <div class="btn btn-light">
+                <a asp-action="Home" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">⬅️ Previous</a>
+            </div>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <div class="btn btn-light">
+                <a asp-action="Home" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next ➡️</a>
+            </div>
+        }
+    </div>
+    <div class="buttons-block">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <td><a class="btn btn-info" href="~/Account/Profile">Profile</a></td>
+        }
+    </div>
+</div>
+</body>
+</html>

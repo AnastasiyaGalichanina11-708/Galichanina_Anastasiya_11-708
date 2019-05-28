@@ -1,0 +1,26 @@
+@model CookingApp.Models.ApplicationUser
+
+
+<head runat="server" />
+
+@using (Html.BeginForm("EditUser", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <div class="form-group">
+         <h3 class="header-block">Настройки личного кабинета</h3>
+    </div>
+    <fieldset>
+        @Html.HiddenFor(m => m.Email)    
+        <p>      
+            @Html.LabelFor(m => m.PhoneNumber, "Номер телефона")
+            <br />
+            @Html.EditorFor(m => m.PhoneNumber)            
+        </p>
+        
+        <input type="file" name="uploadedFile" /><br>
+    </fieldset>
+    <div class="buttons-block">
+        <p><input type="submit" class="btn btn-primary" value="Отправить" /></p>
+        <p><a class="btn btn-secondary" href="~/Account/Profile">Back</a></p>
+    </div>
+}

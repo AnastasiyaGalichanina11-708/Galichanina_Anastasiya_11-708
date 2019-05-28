@@ -1,0 +1,91 @@
+@using CookingApp.Markdown
+@model CookingApp.Models.Recipe
+@{
+    ViewData["Title"] = "Статья";
+}
+
+<html>
+<head>
+    <title>Recipe</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="body-content">
+    
+    <div class="posts-container">
+        <h2 class="post-header">@Model.Title</h2>
+        <h5 class="category-header">@DateTime.FromBinary(Model.CreationDate) @Model.Username</h5> 
+        <h5 class="category-header">@Model.Category</h5> 
+    
+        <img src="@Url.Content(Model.ImagePath)" class="card-img-top">
+    
+        <h4 class="content-header">Ingredients</h4>    
+        <div class="post-content">@Markdown.ParseHtmlString(Model.Ingredients)</div>
+
+        <h4 class="content-header">Content</h4>   
+        <div class="post-content">@Markdown.ParseHtmlString(Model.Content)</div>
+   
+        <div class="buttons-block">
+            
+            @using (Html.BeginForm("ApproveRecipe", "Review", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="The price" id="posttext-@Model.Id" name="score">
+                    <input type="hidden" name="userName" value="@Model.Username"/>
+                    <input type="hidden" name="id" value="@Model.Id"/>
+                    <input type="hidden" name="articleId" value="@Model.Id"/>
+                    <div class="input-group-append">
+                        <input class="btn btn-outline-primary" type="submit" value="Approve"/>
+                    </div>
+                </div>
+            }
+            @using (Html.BeginForm("DeclineRecipe", "Review", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                <div class="input-group mb-3">
+                    <input type="text" id="posttext-@Model.Id" class="form-control" placeholder="Comment" name="content">
+                    <div class="input-group-append">
+                        <input class="btn btn-outline-danger" type="submit" value="Decline"/>
+                    </div>
+                    <input type="hidden" name="articleId" value="@Model.Id"/>
+                </div>
+            }
+         
+        </div>
+        
+        
+@*         <div id="postdiv-@Model.Id" style="display: none"> *@
+@*             @using (Html.BeginForm("DeclineRecipe", "Review", FormMethod.Post, new {enctype = "multipart/form-data"})) *@
+@*             { *@
+@*                 <textarea id="posttext-@Model.Id" name="content"></textarea> *@
+@*                 <input type="hidden" name="articleId" value="@Model.Id"/> *@
+@*                 <input type="submit" value="Apply"/> *@
+@*             } *@
+@*         </div> *@
+@*         <script> *@
+@*             function openCommentForm(postId) { *@
+@*                 $('#postdiv-' + postId).show(); *@
+@*                 $('#post-' + postId).hide(); *@
+@*             } *@
+@*         </script> *@
+@*          *@
+@*          *@
+@*         <div id="post-@Model.Id" style="display: none"> *@
+@*             @using (Html.BeginForm("ApproveRecipe", "Review", FormMethod.Post, new {enctype = "multipart/form-data"})) *@
+@*             { *@
+@*                 <input type="hidden" name="id" value="@Model.Id"/> *@
+@*                 <input type="hidden" name="userName" value="@Model.Username"/> *@
+@*                 <input type="number" id="posttext-@Model.Id" name="score"/> *@
+@*                 <input type="submit" value="Send"/> *@
+@*             } *@
+@*         </div> *@
+@*         <script> *@
+@*             function openApproveForm(postId) { *@
+@*                 $('#postdiv-' + postId).hide(); *@
+@*                 $('#post-' + postId).show(); *@
+@*             } *@
+@*         </script> *@
+        
+    </div>
+</div>
+</body>
+</html>

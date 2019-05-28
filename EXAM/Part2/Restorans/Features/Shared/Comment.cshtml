@@ -1,0 +1,11 @@
+@model IEnumerable<CookingApp.Models.Comment>
+
+<div class="posts-container">
+    @foreach (var u in Model)
+    {
+            <div class="card-body">
+                <h6 class="post-meta-info-container post-subtitle">@u.UserId </h6>
+                <div class="post-content">@u.Content</div> 
+            </div>
+    }
+</div>

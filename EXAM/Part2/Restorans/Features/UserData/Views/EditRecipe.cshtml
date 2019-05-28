@@ -1,0 +1,44 @@
+@model CookingApp.Models.Recipe
+@{
+    ViewData["Title"] = "Редактировать статью";
+}
+
+<html>
+<head runat="server" />
+<body>
+@using (Html.BeginForm("EditRecipe", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <div class="form-group">
+        <h3 class="header-block">Редактировать</h3>
+    </div>
+    <fieldset>
+        <p>
+            @Html.LabelFor(m => m.Title, "Name")
+            <br />
+            @Html.EditorFor(m => m.Title)
+        </p>
+        @Html.HiddenFor(m => m.Id)
+        <p>
+            @Html.LabelFor(m => m.Content, "Content")
+            <br />
+            @Html.EditorFor(m => m.Content)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Ingredients, "Ingredients")
+            <br />
+            @Html.EditorFor(m => m.Ingredients)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Category, "Category")
+            <br />
+            @Html.EditorFor(m => m.Category)
+        </p>
+    </fieldset>
+    <div class="buttons-block">
+        <p><input type="submit" class="btn btn-primary" value="Отправить" /></p>
+        <p><a class="btn btn-secondary" href="~/Account/Profile">Назад</a></p>
+    </div>
+}
+</body>
+</html>

@@ -1,0 +1,24 @@
+@model CookingApp.Features.Identity.Models.LoginViewModel
+
+<h2>Login to the application</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Email">Email address</label>
+                <input asp-for="Email" type="text" class="form-control" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group form-check">
+                <input asp-for="RememberMe" type="checkbox" class="form-check-input" >
+                <label asp-for="RememberMe" class="form-check-label">Remember</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Next</button>
+            <button class="btn btn-secondary" asp-controller="Auth" asp-action="ResetPassword">Forgot password?</button>
+        </form>
+    </div>
+</div>

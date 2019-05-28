@@ -1,0 +1,68 @@
+@using CookingApp.Models
+@model CookingApp.Features.UserData.Models.CreateRecipeViewModel
+@{
+    ViewData["Title"] = "Добавить статью";
+}
+
+<html>
+<head runat="server" />
+<body>
+<div class="body-content">
+    @using (Html.BeginForm("CreateRecipe", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        <div class="posts-container">
+            <h3 class="header-block">Добавить новый рецепт</h3>
+
+            @Html.ValidationMessageFor(model => model.Recipe.Title)
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Название</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Title" name="Title">
+            </div>
+
+            @Html.ValidationMessageFor(model => model.Recipe.Category)
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Категория</span>
+                </div>
+                @Html.DropDownList("category", Html.GetEnumSelectList(typeof(Category)))
+            </div>
+            
+            @Html.ValidationMessageFor(model => model.Recipe.Cuisine)
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Кухня</span>
+                </div>
+                @Html.DropDownList("cuisineId",new SelectList(Model.Cuisines,"Value","Text"))
+            </div>
+
+            @Html.ValidationMessageFor(model => model.Recipe.Ingredients)
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Ингредиенты</span>
+                </div>
+                <textarea class="form-control" aria-label="With textarea" name="Ingredients"></textarea>
+            </div>
+
+            @Html.ValidationMessageFor(model => model.Recipe.Content)
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Содержимое</span>
+                </div>
+                <textarea class="form-control" aria-label="With textarea" name="Content"></textarea>
+            </div>
+
+
+            <div class="buttons-block">
+                <input type="file" class="form-control-file" name="imageFile">
+            </div>
+
+            <div class="buttons-block">
+                <input type="submit" class="btn btn-primary" value="Добавить"/>
+            </div>
+        </div>
+    }
+</div>
+</body>
+</html>

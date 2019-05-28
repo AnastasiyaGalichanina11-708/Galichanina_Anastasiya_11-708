@@ -1,0 +1,27 @@
+@model CookingApp.Features.Identity.Models.RegisterViewModel
+
+<h2>Registration</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" method="post" asp-controller="Auth" asp-action="Register">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Email">Email address</label>
+                <input asp-for="Email" type="text" class="form-control" placeholder="Enter email">
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                <span asp-validation-for="Password"></span>
+            </div>  
+            <div class="form-group">
+                <label asp-for="PasswordConfirm">Confirm password</label>
+                <input asp-for="PasswordConfirm" type="password" class="form-control" placeholder="Password">
+                <span asp-validation-for="PasswordConfirm"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+@model IEnumerable<CookingApp.Models.Recipe>
+@functions
+{
+    private static string GetSubstring(string n)
+    {
+        if (n == null || n.Length < 30)
+            return n;
+        return n.Substring(0, n.Length > 120 ? 120 : n.Length) + " ...";
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Лента</title>
+</head>
+<body>
+<div class="body-content">
+    <h3 class="header-block">Feed</h3>
+    <div class="posts-container">
+        @foreach (var recipe in Model)
+        {
+            <tr>
+                <div class="card bg-light mb-3">
+                    <img src="@Url.Content(recipe.ImagePath)" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.Title</h5>
+                        <p class="card-text">@GetSubstring(recipe.Content)</p>
+                        <a class="btn btn-primary" href="~/Main/Show/@recipe.Id">Show</a>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger" href="~/Account/Delete/@recipe.Id">Delete</a>
+                        }
+                    </div>
+                </div>
+            </tr>
+        }
+    </div>
+      
+</div>
+</body>
+</html>

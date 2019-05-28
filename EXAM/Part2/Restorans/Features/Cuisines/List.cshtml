@@ -1,0 +1,62 @@
+@model CookingApp.Features.Cuisines.CuisineViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Buy new recipes from other cuisines</title>
+</head>
+<body>
+<div class="posts-container">
+    <div class="post-content">
+        <h3 class="header-block">Buy new recipes from other cuisines</h3>
+        <table class="table">
+            @foreach (var cuisine in Model.AvailableCuisines)
+            {
+                <tr>
+                    <td>@cuisine.Name</td>
+                    <td>@cuisine.Description</td>
+                    <td>@cuisine.Price</td>
+                    <td>
+                        <form asp-action="Buy" asp-route-id="@cuisine.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Buy
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            @foreach (var cuisine in Model.UnavailableCuisines)
+            {
+                <tr>
+                    <td>@cuisine.Name</td>
+                    <td>@cuisine.Description</td>
+                    <td>@cuisine.Price</td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="post-content">
+        <h3 class="header-block">Purchased cuisines</h3>
+        <table class="table">
+            @foreach (var cuisine in Model.PurchasedCuisines)
+            {
+                <tr>
+                    <td>@cuisine.Name</td>
+                    <td>@cuisine.Description</td>
+                    <td>@cuisine.Price</td>
+                    <td>
+                        <form asp-action="ShowCuisine" asp-controller="Main" asp-route-id="@cuisine.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Show recipes
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+</body>
+</html>

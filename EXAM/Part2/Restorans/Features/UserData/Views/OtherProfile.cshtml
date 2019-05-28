@@ -1,0 +1,43 @@
+@model IEnumerable<CookingApp.Models.Recipe>
+ @{
+     ViewData["Title"] = "Профиль пользователя";
+ }
+ <!DOCTYPE html>
+ 
+ <html>
+ <head>
+     <title>Профиль</title>
+ </head>
+ <body>
+     <div class="container profile-page">
+         <div class="row">
+             <div class="col-4">
+                 
+                 <h3>Профиль</h3>
+                 
+                 @Html.Partial("~/Features/UserData/Views/UserView.cshtml", ViewData["User"] as CookingApp.Models.ApplicationUser)
+                
+             </div>
+             <div class="col-8">
+                 <h3>Посты</h3>
+                 <table class="table-condensed">
+                     @foreach (var article in Model)
+                     {
+                         <tr>
+                             <div class="card bg-light mb-3">
+                                 
+                                 <img src="@Url.Content(article.ImagePath)" class="card-img-top">
+                                 
+                                 <div class="card-body">
+                                     <h5 class="card-title">@article.User.UserName </h5>
+                                     <a class="btn btn-primary" href="~/Main/Show/@article.Id">Показать</a>                                  
+                                 </div>
+                             </div>
+                         </tr>
+                     }
+                 </table>
+             </div>
+         </div>
+     </div>
+ </body>
+ </html>

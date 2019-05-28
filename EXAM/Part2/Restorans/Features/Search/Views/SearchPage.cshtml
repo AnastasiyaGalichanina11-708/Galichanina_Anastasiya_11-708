@@ -1,0 +1,49 @@
+@*@model CookingApp.Features.Search.Models.SearchViewModel
+@functions
+{
+    private static string GetSubstring(string n)
+    {
+        if (n == null || n.Length < 30)
+            return n;
+        return n.Substring(0, n.Length > 120 ? 120 : n.Length) + " ...";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>For review</title>
+</head>
+<body>
+<div class="body-content">
+    
+    @using (Html.BeginForm("SearchPage", "Search", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" aria-label="SearchString" name="SearchString" placeholder="Words for search...">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    }
+    <h3 class="header-block">Results</h3>
+    <div class="posts-container">
+        @foreach (var recipe in Model.SearchResult)
+        {
+            <tr>
+                <div class="card bg-light mb-3">
+                    <img src="@Url.Content(recipe.ImagePath)" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@DateTime.FromBinary(recipe.CreationDate) @recipe.Username</h6>
+                        <p class="card-text">@GetSubstring(recipe.Content)</p>
+                        <a class="btn btn-primary" href="~/Main/Show/@recipe.Id">Show</a>
+                    </div>
+                </div>
+            </tr>
+        }
+    </div>
+</div>
+</body>
+</html>*@
