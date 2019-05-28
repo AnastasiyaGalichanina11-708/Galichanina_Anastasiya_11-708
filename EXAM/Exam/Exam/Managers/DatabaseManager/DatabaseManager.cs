@@ -87,6 +87,7 @@ namespace Exam.Managers.DatabaseManager
             if (recipe != default(File) && isAdmin || recipe != default(File))
             {
                 _databaseContext.Files.Remove(recipe);
+                
                 _databaseContext.SaveChanges();
             }
         }
