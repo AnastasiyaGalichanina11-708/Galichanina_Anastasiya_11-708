@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bullet : MonoBehaviour
+{
+    public int Speed;
+
+    void Start()
+    {
+        
+    }
+
+    
+    void Update()
+    {
+        transform.Translate(Vector3.forward * Speed * Time.deltaTime);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
+        {
+            print(hit.transform.name);
+            Destroy(gameObject);
+        }
+    }
+}
