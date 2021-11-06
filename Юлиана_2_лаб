@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ParallelPi
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введите число:");
+            var accuracy = Convert.ToInt32(Console.ReadLine());
+            ParallelLoopResult result = Parallel.For(1, accuracy, PiMetod);
+            if (!result.IsCompleted)
+                Console.WriteLine("Выполнение цикла завершено на итерации {0}", result.LowestBreakIteration);
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+            CancellationToken token = cancelTokenSource.Token;
+
+            var stop = Console.ReadLine();
+            if (stop == "Стоп") {
+                cancelTokenSource.Cancel();
+            }
+
+            if (token.IsCancellationRequested)
+            {
+                Console.WriteLine("Операция прервана токеном");
+                return;
+            }
+        }
+        static void PiMetod(int x, ParallelLoopState pls)
+        {
+            double pi = 0;
+            for (int k = 0; k <= x - 1; k++)
+            {
+                pi = pi + 4 / (4 * (double)k + 1) - 4 / (4
+               * (double)k + 3);
+                if (k == 1000)
+                    pls.Break();
+
+            }
+            //Console.WriteLine("Выполняется задача {0}", Task.CurrentId);
+            Console.WriteLine("Пи с точностью {0} равен {1}", x, pi);
+            Thread.Sleep(3000);
+        }
+    }
+}
